@@ -1,5 +1,5 @@
 var svgWidth = 960;
-var svgHeight = 960;
+var svgHeight = 600;
 
 var margin = {
   top: 20,
@@ -71,17 +71,17 @@ d3.csv("../D3datajournalism/data.csv").then(function(stateData) {
  //   console.log(data.healthcare, data.poverty);
 
   });
-  
+
   // Step 2: Create scale functions
   // ==============================
   var xLinearScale = d3.scaleLinear()
-    .domain([8, d3.max(stateData, d =>d.poverty)])
-    .range([0, width]);
+    .domain([d3.min(stateData, d =>d.poverty-2), d3.max(stateData, d =>d.poverty)+2])
+    .range([d3.min(stateData, d =>d.poverty-2), width]);
  //   console.log(d3.max(stateData, d =>d.poverty));
 
   var yLinearScale = d3.scaleLinear()
-    .domain([0, d3.max(stateData, d => d.healthcare)])  
-    .range([height, 0]);
+    .domain([d3.min(stateData, d =>d.healthcare-2), d3.max(stateData, d => d.healthcare)+2])  
+    .range([height, d3.min(stateData, d =>d.healthcare-2)]);
  //   console.log(d3.max(stateData, d => d.healthcare));
 
   // Step 3: Create axis functions
