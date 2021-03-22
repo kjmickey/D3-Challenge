@@ -73,6 +73,10 @@ d3.csv("../D3datajournalism/data.csv").then(function(stateData) {
   });
 
   // Step 2: Create scale functions
+  // I padded them so they are big enough that a bubble
+  // doesn't extend over the top or right edges of the axis
+  // limits or touch the lines on left or bottom
+
   // ==============================
   var xLinearScale = d3.scaleLinear()
     .domain([d3.min(stateData, d =>d.poverty-2), d3.max(stateData, d =>d.poverty)+2])
@@ -109,8 +113,28 @@ d3.csv("../D3datajournalism/data.csv").then(function(stateData) {
     .attr("cy", d => yLinearScale(d.healthcare))
     .attr("r", "15");
 
+    //Put state names in the circles
+    // ============================
+    var circleLabels = chartGroup.selectAll(null).data(stateData).enter().append("text");
+    circleLabels
+    .attr("class", "stateText")
+    .attr("x", function(d) {
+      return xLinearScale(d.poverty);
+    })
+    .attr("y", function(d) {
+      return yLinearScale(d.healthcare)+6;
+    })
+    .text(function(d) {
+      return d.abbr;
+    })
+
+    // .attr("font-family", "sans-serif")
+    // .attr("font-size", "10px")
+    // .attr("text-anchor", "middle")
+    // .attr("fill", "white");
+
     // Step 6: Initialize tool tip
-    // ==============================
+    // ============================
     var toolTip = d3.tip()
       .attr("class", "d3-tip")
       .offset([80, 60])
@@ -133,12 +157,12 @@ d3.csv("../D3datajournalism/data.csv").then(function(stateData) {
       });
   // Create axes labels
   chartGroup.append("text")
-  .attr("transform", "rotate(-90)")
-  .attr("y", 0 - margin.left + 40)
-  .attr("x", 0 - (height / 2))
-  .attr("dy", "1em")
-  .attr("class", "axisText")
-  .text("Lacks Healthcare (%)");
+      .attr("transform", "rotate(-90)")
+    .attr("y", 0 - margin.left + 40)
+    .attr("x", 0 - (height / 2))
+    .attr("dy", "1em")
+    .attr("class", "axisText")
+    .text("Lacks Healthcare (%)");
 
 
 
