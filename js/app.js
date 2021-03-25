@@ -107,7 +107,7 @@ d3.csv("../D3datajournalism/data.csv").then(function(stateData) {
     return d.abbr;
     })
 
-      // Step 6: Initialize tool tip
+    // Step 6: Initialize tool tip
     // ============================
     var toolTip = d3.tip()
       .attr("class", "d3-tip")
@@ -143,7 +143,7 @@ d3.csv("../D3datajournalism/data.csv").then(function(stateData) {
   chartGroup.append("text")
       .attr("transform", "rotate(-90)")
     .attr("y", 0 - margin.left + 40)
-    .attr("x", 0 - (height / 2))
+    .attr("x", 0 - (height / 2)-40)
     .attr("dy", "1em")
     .attr("class", "axisText")
     .text("Lacks Healthcare (%)");
